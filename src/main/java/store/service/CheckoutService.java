@@ -11,7 +11,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+
 public class CheckoutService {
+    private static final double MEMBERSHIP_DISCOUNT_RATE = 0.3;
+    private static final int MAX_MEMBERSHIP_DISCOUNT = 8000;
+
     public Receipt checkout(ShoppingCart cart, boolean isMembership) {
         Map<Product, Integer> items = cart.getItems();
 
@@ -35,7 +39,6 @@ public class CheckoutService {
                     Product product = entry.getKey();
                     int quantity = entry.getValue();
 
-                    // ✅ PromotionCalculator에서 프로모션 적용 여부 판단 후 적용
                     boolean isPromotionApplied = PromotionCalculator.applyPromotion(product, quantity);
 
                     if (isPromotionApplied) {
@@ -56,6 +59,13 @@ public class CheckoutService {
                 })
                 .sum();
 
-        return new Receipt(purchasedItems, freeItems, totalAmount, promotionDiscount, 0, totalAmount - promotionDiscount);
+        int discountBase = Math.max(0, totalAmount - promotionDiscount);
+        int membershipDiscount = isMembership
+                ? Math.min((int) (discountBase * MEMBERSHIP_DISCOUNT_RATE), MAX_MEMBERSHIP_DISCOUNT)
+                : 0;
+
+        int finalAmount = totalAmount - promotionDiscount - membershipDiscount;
+
+        return new Receipt(purchasedItems, freeItems, totalAmount, promotionDiscount, membershipDiscount , finalAmount);
     }
 }

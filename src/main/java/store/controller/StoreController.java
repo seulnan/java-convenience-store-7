@@ -26,15 +26,21 @@ public class StoreController {
     }
 
     public void run() {
-        outputView.displayWelcomeMessage();
-        productService.displayProducts();
+        boolean continueShopping = true;
 
-        ShoppingCart cart = inputView.getUserShoppingCart();
-        promotionService.applyPromotions(cart);
+        while (continueShopping) {
+            outputView.displayWelcomeMessage();
+            productService.displayProducts();
 
-        boolean isMembership = inputView.askMembership();
-        Receipt receipt = checkoutService.checkout(cart, isMembership);
+            ShoppingCart cart = inputView.getUserShoppingCart();
+            promotionService.applyPromotions(cart);
 
-        outputView.displayReceipt(receipt);
+            boolean isMembership = inputView.askMembership();
+            Receipt receipt = checkoutService.checkout(cart, isMembership);
+
+            outputView.displayReceipt(receipt);
+
+            continueShopping = inputView.askContinueShopping();
+        }
     }
 }

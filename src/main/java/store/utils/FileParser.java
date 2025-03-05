@@ -51,13 +51,8 @@ public class FileParser {
      * ✅ `promotionStock`을 고려한 Product 객체 생성
      */
     private static Product parseProduct(String line, List<Promotion> promotions) {
-        System.out.println("[DEBUG] Parsing line: " + line); // ✅ 로그 추가
-
         String[] parts = line.split(",");
 
-        System.out.println("[DEBUG] Parsed fields: " + Arrays.toString(parts));
-
-        // ✅ CSV 형식 체크 (상품명, 가격, 수량, 프로모션 포함)
         if (parts.length != 4) {
             throw new IllegalArgumentException("[ERROR] 상품 데이터 형식이 올바르지 않습니다: " + line);
         }
@@ -67,8 +62,6 @@ public class FileParser {
         int stock = Integer.parseInt(parts[2].trim());
         String promotionName = parts[3].trim();
 
-
-        // ✅ 가격과 재고를 변환하기 전에 로그 출력
         System.out.println("[DEBUG] Extracting - Name: " + name + ", Price: " + price + ", Stock: " + stock+ ", Promotion: " + promotionName);
 
         Promotion promotion = promotions.stream()

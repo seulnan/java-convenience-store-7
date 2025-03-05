@@ -19,12 +19,6 @@ public class Receipt {
         this.promotionDiscount = promotionDiscount;
         this.membershipDiscount = membershipDiscount;
         this.finalAmount = finalAmount;
-
-        // ✅ 디버깅용 로그 (최종 계산된 값 확인)
-        System.out.println("[DEBUG] 총 구매액: " + totalAmount);
-        System.out.println("[DEBUG] 행사 할인: " + promotionDiscount);
-        System.out.println("[DEBUG] 멤버십 할인: " + membershipDiscount);
-        System.out.println("[DEBUG] 최종 결제 금액: " + finalAmount);
     }
 
     public List<PurchaseItem> getPurchasedItems() {

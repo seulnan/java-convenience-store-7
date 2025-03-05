@@ -15,9 +15,11 @@ public class PromotionService {
     private final List<Promotion> promotions;
     private final InputView inputView;
     private final OutputView outputView;
+    private final ProductService productService;
 
-    public PromotionService(InputView inputView, OutputView outputView) {
+    public PromotionService(ProductService productService, InputView inputView, OutputView outputView) {
         this.promotions = FileParser.parsePromotions("promotions.md");
+        this.productService = productService; // ✅ 명시적으로 ProductService 주입
         this.inputView = inputView;
         this.outputView = outputView;
     }

@@ -11,11 +11,11 @@ public class StoreConfig {
     }
 
     public ProductService productService() {
-        return new ProductService(promotionService());
+        return new ProductService();
     }
 
     public PromotionService promotionService() {
-        return new PromotionService(inputView(), outputView());
+        return new PromotionService(productService(), inputView(), outputView()); // ✅ productService를 PromotionService에 주입
     }
 
     public CheckoutService checkoutService() {

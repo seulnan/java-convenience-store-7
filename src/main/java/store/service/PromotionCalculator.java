@@ -32,16 +32,20 @@ public class PromotionCalculator {
     /**
      * ✅ 프로모션을 적용할 수 있다면, ProductService에서 프로모션 재고 확인 후 적용
      */
-    public static boolean applyPromotion(Product product, int quantity, ProductService productService) {
-        Optional<Integer> freeItemCount = calculateFreeItems(product, quantity);
+//    public static boolean applyPromotion(Product product, int quantity, ProductService productService) {
+//        Optional<Integer> freeItemCount = calculateFreeItems(product, quantity);
+//
+//        if (freeItemCount.isEmpty()) {
+//            return false; // 프로모션 적용 불가
+//        }
+//
+//        int freeQuantity = freeItemCount.get();
+//        int promotionStock = productService.getPromotionStock(product);
+//
+//        return freeQuantity <= promotionStock; // 프로모션 재고 부족
+//    }
 
-        if (freeItemCount.isEmpty()) {
-            return false; // 프로모션 적용 불가
-        }
-
-        int freeQuantity = freeItemCount.get();
-        int promotionStock = productService.getPromotionStock(product);
-
-        return freeQuantity <= promotionStock; // 프로모션 재고 부족
+    public static boolean applyPromotion(Product product, int quantity) {
+        return false;
     }
 }

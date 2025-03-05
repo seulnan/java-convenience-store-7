@@ -1,7 +1,9 @@
 package store.utils;
 
+import java.util.Arrays;
 import store.model.domain.Product;
 import store.model.domain.Promotion;
+import store.enums.PromotionType;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,12 +48,18 @@ public class FileParser {
     }
 
     /**
-     * ✅ `promotionStock` 제거 후 Product 객체 생성
+     * ✅ `promotionStock`을 고려한 Product 객체 생성
      */
     private static Product parseProduct(String line, List<Promotion> promotions) {
+        System.out.println("[DEBUG] Parsing line: " + line); // ✅ 로그 추가
+
         String[] parts = line.split(",");
-        if (parts.length < 4) {
-            throw new IllegalArgumentException("[ERROR] 상품 데이터 형식이 올바르지 않습니다.");
+
+        System.out.println("[DEBUG] Parsed fields: " + Arrays.toString(parts));
+
+        // ✅ CSV 형식 체크 (상품명, 가격, 수량, 프로모션 포함)
+        if (parts.length != 4) {
+            throw new IllegalArgumentException("[ERROR] 상품 데이터 형식이 올바르지 않습니다: " + line);
         }
 
         String name = parts[0].trim();
@@ -59,12 +67,16 @@ public class FileParser {
         int stock = Integer.parseInt(parts[2].trim());
         String promotionName = parts[3].trim();
 
+
+        // ✅ 가격과 재고를 변환하기 전에 로그 출력
+        System.out.println("[DEBUG] Extracting - Name: " + name + ", Price: " + price + ", Stock: " + stock+ ", Promotion: " + promotionName);
+
         Promotion promotion = promotions.stream()
                 .filter(p -> p.getName().equals(promotionName))
                 .findFirst()
                 .orElse(null);
 
-        return new Product(name, price, stock, promotion); // ✅ `promotionStock` 제거
+        return new Product(name, price, stock, promotion); // ✅ promotionStock 포함
     }
 
     private static Promotion parsePromotion(String line) {

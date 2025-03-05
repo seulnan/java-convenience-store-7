@@ -12,7 +12,7 @@ public class Product {
     private int promotionStock;
     private final Promotion promotion;
 
-    public Product(String name, int price, int stock, int promotionStock, Promotion promotion) {
+    public Product(String name, int price, int stock, Promotion promotion) {
         this.name = name;
         this.price = price;
         this.stock = stock;
